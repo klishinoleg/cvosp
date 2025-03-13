@@ -41,6 +41,8 @@ jobs:
               echo "Projects dir is not intalled. Install GitHub..."
               cd /home/ec2-user
               git clone https://github.com/klishinoleg/cvosp.git
+              cd /home/ec2-user/cvosp
+              cp .env.default .env
             else
               echo "Update project..."
               cd /home/ec2-user/cvosp
