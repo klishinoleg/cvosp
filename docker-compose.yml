@@ -4,11 +4,13 @@ services:
     container_name: db
     restart: always
     env_file:
-      - .env
+      - path: ".env"
+        required: true
     ports:
       - "${DB_PORT}:${DB_PORT}"
     volumes:
       - postgres_data:/var/lib/postgresql/data
+    entrypoint: ["/cvosp/db_entrypoint.sh", "docker-entrypoint.sh", "postgres"]
 
   api:
     volumes:

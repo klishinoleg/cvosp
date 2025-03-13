@@ -50,6 +50,7 @@ jobs:
             fi
           
             chmod +x /home/ec2-user/cvosp/entrypoint.sh
+            chmod +x /home/ec2-user/cvosp/db_entrypoint.sh
           
             # 4️⃣ Rub
             echo "Rebuild docker container..."
