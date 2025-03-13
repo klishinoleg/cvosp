@@ -25,4 +25,8 @@ else
     echo "AWS Secrets Manager is not configured, using .env"
 fi
 
-exec env $(cat /etc/environment | xargs) "$@"
+set -o allexport
+source /etc/environment
+set +o allexport
+
+exec "$@"
