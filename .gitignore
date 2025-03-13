@@ -39,3 +39,4 @@ docker-compose.override.yml
 *.mo
 /github-action-key
 /github-action-key.pub
+/help.txt
