@@ -11,10 +11,12 @@ if [ -n "$AWS_REGION" ] && [ -n "$SECRET_NAME" ]; then
 
         if [[ -n "$POSTGRES_USER_NEW" && "$POSTGRES_USER_NEW" != "null" ]]; then
             export POSTGRES_USER="$POSTGRES_USER_NEW"
+            echo "export POSTGRES_USER=\"$POSTGRES_USER_NEW\"" >> /etc/environment
         fi
 
         if [[ -n "$POSTGRES_PASSWORD_NEW" && "$POSTGRES_PASSWORD_NEW" != "null" ]]; then
             export POSTGRES_PASSWORD="$POSTGRES_PASSWORD_NEW"
+            echo "export POSTGRES_PASSWORD=\"$POSTGRES_PASSWORD_NEW\"" >> /etc/environment
         fi
     else
         echo "AWS Secrets not available, using .env"
@@ -22,5 +24,7 @@ if [ -n "$AWS_REGION" ] && [ -n "$SECRET_NAME" ]; then
 else
     echo "AWS Secrets Manager is not configured, using .env"
 fi
+
+source /etc/environment
 
 exec "$@"
