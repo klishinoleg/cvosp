@@ -47,6 +47,8 @@ jobs:
               git pull origin main
             fi
           
+            chmod +x /home/ec2-user/cvosp/entrypoint.sh
+          
             # 4️⃣ Rub
             echo "Rebuild docker container..."
             docker-compose down
