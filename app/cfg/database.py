@@ -12,7 +12,7 @@ class Secret:
 
     def __init__(self):
         """Intit AWS sectrets if it's possible"""
-        aws_secret_name = os.getenv("AWS_SECRET_NAME")
+        aws_secret_name = os.getenv("SECRET_NAME")
         aws_region = os.getenv("AWS_REGION")
         if aws_region and aws_secret_name:
             client = boto3.client("secretsmanager", aws_region)
