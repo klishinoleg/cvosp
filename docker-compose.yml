@@ -1,0 +1,33 @@
+services:
+  db:
+    image: postgres:15
+    container_name: db
+    restart: always
+    env_file:
+      - .env
+    ports:
+      - "${DB_PORT}:${DB_PORT}"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  api:
+    volumes:
+      - .:/cvosp
+    build:
+      context: .
+      args:
+        ADMIN_USER: ${ADMIN_USER}
+        ADMIN_PASSWORD: ${ADMIN_PASSWORD}
+        APP_PORT: ${APP_PORT}
+        DB_PORT: ${DB_PORT}
+    container_name: cvosp
+    restart: always
+    depends_on:
+      - db
+    env_file:
+      - path: ".env"
+        required: true
+    ports:
+      - "${APP_PORT}:${APP_PORT}"
+volumes:
+  postgres_data:
