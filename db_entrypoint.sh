@@ -9,10 +9,11 @@ if [ -n "$AWS_REGION" ] && [ -n "$SECRET_NAME" ]; then
         export POSTGRES_USER_NEW=$(echo "$SECRET_JSON" | jq -r '.POSTGRES_USER')
         export POSTGRES_PASSWORD_NEW=$(echo "$SECRET_JSON" | jq -r '.POSTGRES_PASSWORD')
 
-        if [[ -n "$POSTGRES_USER_NEW" ]]; then
+        if [[ -n "$POSTGRES_USER_NEW" && "$POSTGRES_USER_NEW" != "null" ]]; then
             export POSTGRES_USER="$POSTGRES_USER_NEW"
         fi
-        if [[ -n "$POSTGRES_PASSWORD_NEW" ]]; then
+
+        if [[ -n "$POSTGRES_PASSWORD_NEW" && "$POSTGRES_PASSWORD_NEW" != "null" ]]; then
             export POSTGRES_PASSWORD="$POSTGRES_PASSWORD_NEW"
         fi
     else
