@@ -6,8 +6,15 @@ if [ -n "$AWS_REGION" ] && [ -n "$SECRET_NAME" ]; then
     SECRET_JSON=$(aws secretsmanager get-secret-value --secret-id "$SECRET_NAME" --region "$AWS_REGION" --query SecretString --output text || echo "")
 
     if [ -n "$SECRET_JSON" ]; then
-        export POSTGRES_USER=$(echo "$SECRET_JSON" | jq -r '.POSTGRES_USER')
-        export POSTGRES_PASSWORD=$(echo "$SECRET_JSON" | jq -r '.POSTGRES_PASSWORD')
+        export POSTGRES_USER_NEW=$(echo "$SECRET_JSON" | jq -r '.POSTGRES_USER')
+        export POSTGRES_PASSWORD_NEW=$(echo "$SECRET_JSON" | jq -r '.POSTGRES_PASSWORD')
+
+        if [[ -n "$POSTGRES_USER_NEW" ]]; then
+            export POSTGRES_USER="$POSTGRES_USER_NEW"
+        fi
+        if [[ -n "$POSTGRES_PASSWORD_NEW" ]]; then
+            export POSTGRES_PASSWORD="$POSTGRES_PASSWORD_NEW"
+        fi
     else
         echo "AWS Secrets not available, using .env"
     fi
