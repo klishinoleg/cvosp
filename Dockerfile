@@ -16,6 +16,5 @@ RUN mkdir uploads
 RUN pip install supervisor
 
 RUN chmod +x /cvosp/entrypoint.sh
-RUN chmod +x /cvosp/db_entrypoint.sh
 
 CMD ["/cvosp/entrypoint.sh"]
