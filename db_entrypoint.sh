@@ -25,8 +25,9 @@ else
     echo "AWS Secrets Manager is not configured, using .env"
 fi
 
-set -o allexport
 source /etc/environment
-set +o allexport
 
-exec "$@"
+echo "Final POSTGRES_USER: $POSTGRES_USER"
+echo "Final POSTGRES_PASSWORD: $POSTGRES_PASSWORD"
+
+exec docker-entrypoint.sh postgres
