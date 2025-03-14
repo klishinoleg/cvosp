@@ -47,9 +47,9 @@ else
     echo "📌 [init_db.sh] Creating database $DB_NAME..."
 
     psql -U $POSTGRES_USER <<EOSQL
-        CREATE USER $DB_USER WITH PASSWORD '$DB_PASSWORD';
-        CREATE DATABASE $DB_NAME OWNER $DB_USER;
-        GRANT ALL PRIVILEGES ON DATABASE $DB_NAME TO $DB_USER;
+        CREATE USER "$DB_USER" WITH PASSWORD '$DB_PASSWORD';
+        CREATE DATABASE "$DB_NAME" OWNER "$DB_USER";
+        GRANT ALL PRIVILEGES ON DATABASE "$DB_NAME" TO "$DB_USER";
 EOSQL
 
     echo "✅ [init_db.sh] Database $DB_NAME and user $DB_USER created successfully."
