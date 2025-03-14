@@ -25,8 +25,8 @@ class Secret:
 
 secrets = Secret()
 
-DB_USER = secrets.get('POSTGRES_USER')
-DB_PASSWORD = secrets.get('POSTGRES_PASSWORD')
+DB_USER = secrets.get('DB_USER')
+DB_PASSWORD = secrets.get('DB_PASSWORD')
 DB_NAME = secrets.get('DB_NAME')
 DB_HOST = secrets.get('DB_HOST')
 DB_PORT = secrets.get('DB_PORT')

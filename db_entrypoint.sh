@@ -6,17 +6,20 @@ if [ -n "$AWS_REGION" ] && [ -n "$SECRET_NAME" ]; then
     SECRET_JSON=$(aws secretsmanager get-secret-value --secret-id "$SECRET_NAME" --region "$AWS_REGION" --query SecretString --output text || echo "")
 
     if [ -n "$SECRET_JSON" ]; then
-        export POSTGRES_USER_NEW=$(echo "$SECRET_JSON" | jq -r '.POSTGRES_USER')
-        export POSTGRES_PASSWORD_NEW=$(echo "$SECRET_JSON" | jq -r '.POSTGRES_PASSWORD')
+        DB_USER_NEW=$(echo "$SECRET_JSON" | jq -r '.DB_USER')
+        DB_PASSWORD_NEW=$(echo "$SECRET_JSON" | jq -r '.DB_PASSWORD')
+        POSTGRES_PASSWORD_NEW=$(echo "$SECRET_JSON" | jq -r '.POSTGRES_PASSWORD')
 
-        if [[ -n "$POSTGRES_USER_NEW" && "$POSTGRES_USER_NEW" != "null" ]]; then
-            export POSTGRES_USER="$POSTGRES_USER_NEW"
-            echo "export POSTGRES_USER=\"$POSTGRES_USER_NEW\"" >> /etc/environment
+        if [[ -n "$DB_USER_NEW" && "$DB_USER_NEW" != "null" ]]; then
+            DB_USER="$DB_USER_NEW"
+        fi
+
+        if [[ -n "$DB_PASSWORD_NEW" && "$DB_PASSWORD_NEW" != "null" ]]; then
+            DB_PASSWORD="$DB_PASSWORD_NEW"
         fi
 
         if [[ -n "$POSTGRES_PASSWORD_NEW" && "$POSTGRES_PASSWORD_NEW" != "null" ]]; then
-            export POSTGRES_PASSWORD="$POSTGRES_PASSWORD_NEW"
-            echo "export POSTGRES_PASSWORD=\"$POSTGRES_PASSWORD_NEW\"" >> /etc/environment
+            POSTGRES_PASSWORD="$POSTGRES_PASSWORD_NEW"
         fi
     else
         echo "AWS Secrets not available, using .env"
@@ -25,9 +28,30 @@ else
     echo "AWS Secrets Manager is not configured, using .env"
 fi
 
-source /etc/environment
-
-echo "Final POSTGRES_USER: $POSTGRES_USER"
+echo "Final DB_USER: $DB_USER"
+echo "Final DB_PASSWORD: $DB_PASSWORD"
 echo "Final POSTGRES_PASSWORD: $POSTGRES_PASSWORD"
 
-exec docker-entrypoint.sh postgres
+exec env POSTGRES_PASSWORD="$POSTGRES_PASSWORD" docker-entrypoint.sh postgres &
+
+sleep 5
+
+echo "Hello 5"
+
+DB_EXISTS=$(psql -U postgres -tAc "SELECT 1 FROM pg_database WHERE datname='$DB_NAME'")
+
+if [ "$DB_EXISTS" == "1" ]; then
+    echo "✅ [init_db.sh] Database $DB_NAME already exists. Skipping initialization."
+else
+    echo "📌 [init_db.sh] Creating database $DB_NAME..."
+
+    psql -U postgres <<EOSQL
+        CREATE USER $DB_USER WITH PASSWORD '$DB_PASSWORD';
+        CREATE DATABASE $DB_NAME OWNER $DB_USER;
+        GRANT ALL PRIVILEGES ON DATABASE $DB_NAME TO $DB_USER;
+EOSQL
+
+    echo "✅ [init_db.sh] Database $DB_NAME and user $DB_USER created successfully."
+fi
+
+wait
