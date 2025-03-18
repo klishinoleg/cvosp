@@ -3,9 +3,6 @@ echo "Waiting for PostgreSQL to be ready..."
 while ! nc -z $DB_HOST $DB_PORT; do sleep 1; done
 echo "PostgreSQL is ready!"
 
-
-echo "Running Aerich migrations..."
-
 set -e
 
 if [ -n "$AWS_REGION" ] && [ -n "$SECRET_NAME" ]; then
@@ -35,13 +32,16 @@ echo "Final DB_USER: $DB_USER"
 echo "Final DB_PASSWORD: $DB_PASSWORD"
 
 if [ -d "/cvosp/migrations/models" ]; then
-    echo "Migrations already exist, skipping init-db."
+    echo "Migrations already exist, skipping init-db. Check migrations and update"
+    aerich migrate
+    aerich upgrade
 else
+    sleep 10
+    echo "Running Aerich migrations..."
     echo "Initializing Aerich..."
     aerich init -t app.cfg.database.TORTOISE_ORM
     aerich init-db
     aerich upgrade
-    sleep 10
     echo "Creating admin user..."
     python t.py add_admin "$ADMIN_USER" "$ADMIN_PASSWORD"
 fi
