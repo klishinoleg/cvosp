@@ -42,3 +42,4 @@ docker-compose.override.yml
 /help.txt
 *.pem
 *.pub
+yarn.lock

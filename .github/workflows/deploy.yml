@@ -1,0 +1,64 @@
+name: Deploy to AWS EC2
+
+on:
+  push:
+    branches:
+      - main
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check docker & git version
+        run: ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "docker -v && docker-compose -v && git --version"
+
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Setup SSH Key
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan -H ${{ secrets.SSH_HOST }} >> ~/.ssh/known_hosts
+
+      - name: Deploy to EC2
+        run: |
+          ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} << 'EOF'
+            # 1️⃣ Check git exist
+            if ! command -v git &> /dev/null; then
+              echo "Git has not installed. Install git..."
+              sudo yum update -y
+              sudo yum install -y git
+            fi
+          
+            # 2️⃣ Check a dir exist /home/ec2-user/
+            if [ ! -d "/home/ec2-user" ]; then
+              echo "Create dir /home/ec2-user/"
+              sudo mkdir -p /home/ec2-user
+              sudo chown ec2-user:ec2-user /home/ec2-user
+            fi
+          
+            # 3️⃣ Check the project dir
+            if [ ! -d "/home/ec2-user/cvosp" ]; then
+              echo "Projects dir is not intalled. Install GitHub..."
+              cd /home/ec2-user
+              git clone https://github.com/klishinoleg/cvosp.git
+              cd /home/ec2-user/cvosp
+              cp .env.default .env
+              cp vite/env.default vite/.env
+            else
+              echo "Update project..."
+              cd /home/ec2-user/cvosp
+              git pull origin main
+            fi
+          
+            chmod +x /home/ec2-user/cvosp/entrypoint.sh
+            chmod +x /home/ec2-user/cvosp/db_entrypoint.sh
+            chmod +x /home/ec2-user/cvosp/nginx/entrypoint.sh
+          
+            # 4️⃣ Rub
+            echo "Rebuild docker container..."
+            docker-compose down
+            docker-compose up --build -d
+          EOF
