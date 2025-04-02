@@ -1,0 +1,66 @@
+services:
+  db:
+    image: postgres:15
+    container_name: db
+    restart: always
+    build:
+      context: .
+      dockerfile: dpg.Dockerfile
+    env_file:
+      - path: ".env"
+        required: true
+    ports:
+      - "${DB_PORT}:${DB_PORT}"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./db_entrypoint.sh:/usr/local/bin/db_entrypoint.sh
+    entrypoint: [ "/usr/local/bin/db_entrypoint.sh" ]
+  api:
+    volumes:
+      - .:/cvosp
+    build:
+      context: .
+      dockerfile: dapi.Dockerfile
+    container_name: cvosp
+    restart: always
+    depends_on:
+      - db
+    env_file:
+      - path: ".env"
+        required: true
+    ports:
+      - "8000:8000"
+  nginx:
+    image: nginx:latest
+    container_name: nginx
+    ports:
+      - "$SERVER_PORT:$SERVER_PORT"
+      - "$VITE_PORT:$VITE_PORT"
+    volumes:
+      - ./nginx/default.conf.template:/etc/nginx/conf.d/default.conf.template
+      - ./nginx/entrypoint.sh:/docker-entrypoint.d/99-entrypoint.sh
+    environment:
+      - SERVER_PORT=${SERVER_PORT}
+      - VITE_PORT=${VITE_PORT}
+    entrypoint: [ "/bin/sh", "-c", "/docker-entrypoint.d/99-entrypoint.sh && nginx -g 'daemon off;'" ]
+    depends_on:
+      - api
+      - vite
+  vite:
+    build:
+      context: ./vite
+      dockerfile: ../dvite.Dockerfile
+    container_name: vite
+    ports:
+      - "5173:5173"
+    env_file:
+      - path: .env
+        required: true
+    environment:
+      - SERVER_PORT=${SERVER_PORT}
+      - LANGUAGE=${LANGUAGE}
+      - LANGUAGES=${LANGUAGES}
+    depends_on:
+      - api
+volumes:
+  postgres_data:

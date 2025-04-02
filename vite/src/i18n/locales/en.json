@@ -1,0 +1,16 @@
+{
+  "translations": {
+    "Skills": "Skills",
+    "MarriedMale": "Married",
+    "MarriedFemale": "Married",
+    "NotMarriedMale": "Single",
+    "NotMarriedFemale": "Single",
+    "MarriedOther": "In a relationship",
+    "NotMarriedOther": "Not in a relationship",
+    "Male": "Male",
+    "Female": "Female",
+    "Other": "Other",
+    "User loading error": "User loading error",
+    "Project loading error": "Project loading error"
+  }
+}

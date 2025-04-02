@@ -1,0 +1,19 @@
+{
+  "translations": {
+    "Skills": "Навыки",
+    "MarriedMale": "Женат",
+    "MarriedFemale": "Замужем",
+    "NotMarriedMale": "Не женат",
+    "NotMarriedFemale": "Не замужем",
+    "MarriedOther": "Есть пара",
+    "NotMarriedOther": "Нет пары",
+    "Male": "Мужской",
+    "Female": "Женский",
+    "Other": "Другой",
+    "Profile": "Профиль",
+    "Experience": "Опыт",
+    "Education": "Образование",
+    "User loading error": "Ошибка загрузки данных пользователя",
+    "Project loading error": "Ошибка загрузки проекта"
+  }
+}
