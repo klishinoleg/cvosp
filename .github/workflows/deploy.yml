@@ -9,9 +9,6 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Check docker & git version
-        run: ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "docker -v && docker-compose -v && git --version"
-
       - name: Checkout code
         uses: actions/checkout@v3
 
@@ -21,6 +18,9 @@ jobs:
           echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
           ssh-keyscan -H ${{ secrets.SSH_HOST }} >> ~/.ssh/known_hosts
+
+      - name: Check docker & git version
+        run: ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "docker -v && docker-compose -v && git --version"
 
       - name: Deploy to EC2
         run: |
