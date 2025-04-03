@@ -69,6 +69,8 @@ class UserAdmin(ModelWithImageFields):
 class SkillAdmin(TortoiseModelAdmin):
     list_display = ("id", "name_en", "name_ru")
     exclude = ("name",)
+    search_fields = ("name_en", "name_ru")
+    list_max_show_all = 50
 
 
 @register(UserSkill)
@@ -86,7 +88,7 @@ class UserSkillAdmin(TortoiseModelAdmin):
     formfield_overrides = {
         "competition_level": (WidgetType.InputNumber, {"min": 1, "max": 100, "defaultValue": 90}),
         "group": (WidgetType.InputNumber, {"defaultValue": 1}),
-        "ordering": (WidgetType.InputNumber, {"defaultValue": 50}),
+        "ordering": (WidgetType.InputNumber, {"defaultValue": 50})
     }
 
 
@@ -100,23 +102,27 @@ class KeyQualityAdmin(TortoiseModelAdmin):
 class ProfileAdmin(ModelWithImageFields):
     list_display = ("id", "name_en", "ordering")
     exclude = ("name", "description")
+    search_fields = ("name_en", "name_ru")
 
 
 @register(Job)
 class JobAdmin(ModelWithImageFields):
     list_display = ("id", "name_en", "start_date", "end_date")
     exclude = ("name", "description", "profession")
+    search_fields = ("name_en", "name_ru")
 
 
 @register(Education)
 class EducationAdmin(ModelWithImageFields):
     list_display = ("id", "name_en", "start_date", "end_date", "profession_en")
     exclude = ("name", "description", "profession")
+    search_fields = ("name_en", "name_ru")
 
 
 @register(ContactInfo)
 class ProjectAdmin(ModelWithImageFields):
     list_display = ("id", "name")
+    search_fields = ("name_en", "name_ru")
 
 
 @register(UserContact)
