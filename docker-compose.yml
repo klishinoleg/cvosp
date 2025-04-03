@@ -70,9 +70,12 @@ services:
       - path: .env
         required: true
     environment:
+      - SERVER_HOST=${SERVER_HOST}
       - SERVER_PORT=${SERVER_PORT}
+      - VITE_HOST=${VITE_HOST}
       - LANGUAGE=${LANGUAGE}
       - LANGUAGES=${LANGUAGES}
+      - HTTP_SCHEME=${HTTP_SCHEME}
     depends_on:
       - api
 networks:
