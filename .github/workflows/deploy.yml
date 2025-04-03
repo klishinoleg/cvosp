@@ -74,7 +74,7 @@ jobs:
             # 4️⃣ Run (reload) docker
             echo "Rebuild docker containers with rollback..."
             echo "Tagging current images as backup..."
-            docker compose images | grep -v 'none' | awk '{print $1":"$2}' | while read image; do
+            docker-compose images | grep -v 'none' | awk '{print $1":"$2}' | while read image; do
               docker tag "$image" "${image%:*}:backup"
             done
           
