@@ -7,20 +7,17 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-
-    environment:
-      name: production
-
+    environment: production
     env:
       S3_ACCESS_KEY: ${{ secrets.S3_ACCESS_KEY }}
       S3_SECRET_KEY: ${{ secrets.S3_SECRET_KEY }}
-      SERVER_HOST: ${{ vars.SERVER_HOST }}
-      VITE_HOST: ${{ vars.VITE_HOST }}
-      LANGUAGES: ${{ vars.LANGUAGES }}
-      LANGUAGE: ${{ vars.LANGUAGE }}
-      S3_BUCKET: ${{ vars.S3_BUCKET }}
-      S3_REGION: ${{ vars.S3_REGION }}
-      S3_CDN_DOMAIN: ${{ vars.S3_CDN_DOMAIN }}
+      SERVER_HOST: ${{ env.SERVER_HOST }}
+      VITE_HOST: ${{ env.VITE_HOST }}
+      LANGUAGES: ${{ env.LANGUAGES }}
+      LANGUAGE: ${{ env.LANGUAGE }}
+      S3_BUCKET: ${{ env.S3_BUCKET }}
+      S3_REGION: ${{ env.S3_REGION }}
+      S3_CDN_DOMAIN: ${{ env.S3_CDN_DOMAIN }}
 
     steps:
       - name: Checkout code
@@ -61,6 +58,9 @@ jobs:
               cd /home/ec2-user/cvosp
               export S3_ACCESS_KEY="${S3_ACCESS_KEY}"
               export S3_SECRET_KEY="${S3_SECRET_KEY}"
+              echo "${{ env.SERVER_HOST }} / env.SERVER_HOST"
+              echo "${{ vars.SERVER_HOST }} / vars.SERVER_HOST"
+              echo "${SERVER_HOST} ${VITE_HOST} ${LANGUAGES} ${LANGUAGE} ${S3_BUCKET} ${S3_REGION}"
               envsubst '${SERVER_HOST} ${VITE_HOST} ${LANGUAGES} ${LANGUAGE} ${S3_BUCKET} ${S3_REGION} ${S3_ACCESS_KEY} ${S3_SECRET_KEY} ${S3_CDN_DOMAIN}' < .env.default > .env
               echo "Created .env with deploy variables:"
               cat .env
@@ -70,9 +70,10 @@ jobs:
               git pull origin main
             fi
           
-            chmod +x /home/ec2-user/cvosp/entrypoint.sh
-            chmod +x /home/ec2-user/cvosp/db_entrypoint.sh
+            chmod +x /home/ec2-user/cvosp/docker/entrypoint_db.sh
+            chmod +x /home/ec2-user/cvosp/fastapi/entrypoint.sh
             chmod +x /home/ec2-user/cvosp/nginx/entrypoint.sh
+            chmod +x /home/ec2-user/cvosp/vite/entrypoint.sh
           
             # 4️⃣ Run (reload) docker
             echo "Rebuild docker containers with rollback..."
