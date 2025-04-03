@@ -15,6 +15,8 @@ cfg = Config()
 
 app = FastAPI()
 app.add_event_handler("startup", init_db)
+if not os.path.exists(cfg.image_dir):
+    os.mkdir(cfg.image_dir)
 app.mount("/" + cfg.image_url, StaticFiles(directory=cfg.image_dir), name="upload")
 app.mount("/admin", admin_app, name="admin")
 app.include_router(router)

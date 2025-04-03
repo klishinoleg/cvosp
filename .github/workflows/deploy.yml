@@ -74,8 +74,11 @@ jobs:
             # 4️⃣ Run (reload) docker
             echo "Rebuild docker containers with rollback..."
             echo "Tagging current images as backup..."
-            docker-compose images | grep -v 'none' | awk '{print $1":"$2}' | while read image; do
-              docker tag "$image" "${image%:*}:backup"
+            for image in \
+              klishinoleg/cvosp/api \
+              klishinoleg/cvosp/db \
+              klishinoleg/cvosp/vite; do
+              docker tag "$image:latest" "$image:backup"
             done
           
             echo "Stopping old containers"
@@ -87,7 +90,10 @@ jobs:
             else
               echo "❌ Build failed, rolling back..."
               docker-compose down
-              docker images | grep backup | awk '{print $1}' | while read image; do
+              for image in \
+                klishinoleg/cvosp/api \
+                klishinoleg/cvosp/db \
+                klishinoleg/cvosp/vite; do
                 docker tag "$image:backup" "$image:latest"
               done
               docker-compose up -d

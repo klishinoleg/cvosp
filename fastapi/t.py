@@ -15,7 +15,16 @@ async def add_admin():
     await init_db()
     username = sys.argv[2] if len(sys.argv) >= 3 else get_input("Enter admin username: ")
     password = sys.argv[3] if len(sys.argv) >= 4 else getpass("Enter admin password: ")
-    admin = await User.create(username=username, is_superuser=True)
+    admin = await User.create(
+        username=username,
+        is_superuser=True,
+        first_name="First name",
+        last_name="Last name",
+        description="Description",
+        children_desc="Children description",
+        text="Text",
+        location="Location",
+    )
     print("Admin successfully added")
     await admin.set_password(password)
     await admin.save()
