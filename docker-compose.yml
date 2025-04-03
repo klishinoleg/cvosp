@@ -1,38 +1,50 @@
 services:
   db:
-    image: postgres:15
+    image: klishinoleg/cvosp/db:latest
     container_name: db
+    networks:
+      - database
     restart: always
     build:
       context: .
-      dockerfile: dpg.Dockerfile
+      dockerfile: ./docker/dpg.Dockerfile
     env_file:
       - path: ".env"
         required: true
-    ports:
-      - "${DB_PORT}:${DB_PORT}"
+    expose:
+      - "${DB_PORT}"
     volumes:
       - postgres_data:/var/lib/postgresql/data
-      - ./db_entrypoint.sh:/usr/local/bin/db_entrypoint.sh
+      - ./docker/entrypoint_db.sh:/usr/local/bin/db_entrypoint.sh
     entrypoint: [ "/usr/local/bin/db_entrypoint.sh" ]
   api:
-    volumes:
-      - .:/cvosp
-    build:
-      context: .
-      dockerfile: dapi.Dockerfile
+    image: klishinoleg/cvosp/api:latest
     container_name: cvosp
+    networks:
+      - backend
+      - database
+    volumes:
+      - ./fastapi:/cvosp
+    build:
+      context: ./fastapi
+      dockerfile: ../docker/dapi.Dockerfile
     restart: always
     depends_on:
       - db
+    expose:
+      - "8000"
     env_file:
       - path: ".env"
         required: true
-    ports:
-      - "8000:8000"
   nginx:
     image: nginx:latest
     container_name: nginx
+    networks:
+      - backend
+      - frontend
+    env_file:
+      - path: .env
+        required: true
     ports:
       - "$SERVER_PORT:$SERVER_PORT"
       - "$VITE_PORT:$VITE_PORT"
@@ -47,12 +59,13 @@ services:
       - api
       - vite
   vite:
+    image: klishinoleg/cvosp/vite:latest
+    container_name: vite
+    networks:
+      - frontend
     build:
       context: ./vite
-      dockerfile: ../dvite.Dockerfile
-    container_name: vite
-    ports:
-      - "5173:5173"
+      dockerfile: ../docker/dvite.Dockerfile
     env_file:
       - path: .env
         required: true
@@ -62,5 +75,9 @@ services:
       - LANGUAGES=${LANGUAGES}
     depends_on:
       - api
+networks:
+  frontend:
+  backend:
+  database:
 volumes:
   postgres_data:

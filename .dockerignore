@@ -1,0 +1,28 @@
+# IDE
+*.idea/
+*.vscode/
+*.swp
+
+# Git
+.git/
+.github/
+
+# Node / frontend
+vite/node_modules/
+.venv
+vite/dist/
+vite/build/
+migrations/
+
+# Python cache
+__pycache__/
+fastapi/uploads/
+fastapi/migrations/
+*.pyc
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Docker
+docker-compose.override.yml

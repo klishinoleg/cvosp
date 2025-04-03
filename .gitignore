@@ -1,11 +1,11 @@
 # PyCharm IDE
-.idea/
+*.idea/
 
 # Virtualenv
 venv/
-.venv
-.env
-.env.local
+*.venv
+*.env
+*.env.local
 
 # Python
 __pycache__/
@@ -15,7 +15,8 @@ __pycache__/
 *.DS_Store
 
 # FastAPI + Alembic Migrations
-migrations/
+fastapi/migrations/
+fastapi/uploads/
 alembic/
 
 # PostgreSQL
@@ -35,7 +36,7 @@ logs/
 
 # Docker
 docker-compose.override.yml
-/uploads/
+/fastapi/uploads/
 *.mo
 /github-action-key
 /github-action-key.pub

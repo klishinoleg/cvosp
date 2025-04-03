@@ -8,6 +8,20 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
 
+    environment:
+      name: production
+
+    env:
+      S3_ACCESS_KEY: ${{ secrets.S3_ACCESS_KEY }}
+      S3_SECRET_KEY: ${{ secrets.S3_SECRET_KEY }}
+      SERVER_HOST: ${{ vars.SERVER_HOST }}
+      VITE_HOST: ${{ vars.VITE_HOST }}
+      LANGUAGES: ${{ vars.LANGUAGES }}
+      LANGUAGE: ${{ vars.LANGUAGE }}
+      S3_BUCKET: ${{ vars.S3_BUCKET }}
+      S3_REGION: ${{ vars.S3_REGION }}
+      S3_CDN_DOMAIN: ${{ vars.S3_CDN_DOMAIN }}
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -45,8 +59,11 @@ jobs:
               cd /home/ec2-user
               git clone https://github.com/klishinoleg/cvosp.git
               cd /home/ec2-user/cvosp
-              cp .env.default .env
-              cp vite/env.default vite/.env
+              export S3_ACCESS_KEY="${S3_ACCESS_KEY}"
+              export S3_SECRET_KEY="${S3_SECRET_KEY}"
+              envsubst '${SERVER_HOST} ${VITE_HOST} ${LANGUAGES} ${LANGUAGE} ${S3_BUCKET} ${S3_REGION} ${S3_ACCESS_KEY} ${S3_SECRET_KEY} ${S3_CDN_DOMAIN}' < .env.default > .env
+              echo "Created .env with deploy variables:"
+              cat .env
             else
               echo "Update project..."
               cd /home/ec2-user/cvosp
@@ -57,8 +74,26 @@ jobs:
             chmod +x /home/ec2-user/cvosp/db_entrypoint.sh
             chmod +x /home/ec2-user/cvosp/nginx/entrypoint.sh
           
-            # 4️⃣ Rub
-            echo "Rebuild docker container..."
+            # 4️⃣ Run (reload) docker
+            echo "Rebuild docker containers with rollback..."
+            echo "Tagging current images as backup..."
+            docker compose images | grep -v 'none' | awk '{print $1":"$2}' | while read image; do
+              docker tag "$image" "${image%:*}:backup"
+            done
+          
+            echo "Stopping old containers"
             docker-compose down
-            docker-compose up --build -d
+          
+            echo "Trying to build and start new containers..."
+            if docker-compose up --build -d; then
+              echo "✅ Compose succeeded"
+            else
+              echo "❌ Build failed, rolling back..."
+              docker-compose down
+              docker images | grep backup | awk '{print $1}' | while read image; do
+                docker tag "$image:backup" "$image:latest"
+              done
+              docker-compose up -d
+              echo "✅ Rollback completed"
+            fi
           EOF
