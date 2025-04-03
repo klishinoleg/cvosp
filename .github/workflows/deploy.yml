@@ -8,16 +8,6 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     environment: production
-    env:
-      S3_ACCESS_KEY: ${{ secrets.S3_ACCESS_KEY }}
-      S3_SECRET_KEY: ${{ secrets.S3_SECRET_KEY }}
-      SERVER_HOST: ${{ vars.SERVER_HOST }}
-      VITE_HOST: ${{ vars.VITE_HOST }}
-      LANGUAGES: ${{ vars.LANGUAGES }}
-      LANGUAGE: ${{ vars.LANGUAGE }}
-      S3_BUCKET: ${{ vars.S3_BUCKET }}
-      S3_REGION: ${{ vars.S3_REGION }}
-      S3_CDN_DOMAIN: ${{ vars.S3_CDN_DOMAIN }}
 
     steps:
       - name: Checkout code
@@ -35,7 +25,17 @@ jobs:
 
       - name: Deploy to EC2
         run: |
-          ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} << 'EOF'
+          ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "\
+            SERVER_HOST='${{ vars.SERVER_HOST }}' \
+            VITE_HOST='${{ vars.VITE_HOST }}' \
+            LANGUAGES='${{ vars.LANGUAGES }}' \
+            LANGUAGE='${{ vars.LANGUAGE }}' \
+            S3_BUCKET='${{ vars.S3_BUCKET }}' \
+            S3_REGION='${{ vars.S3_REGION }}' \
+            S3_ACCESS_KEY='${{ secrets.S3_ACCESS_KEY }}' \
+            S3_SECRET_KEY='${{ secrets.S3_SECRET_KEY }}' \
+            S3_CDN_DOMAIN='${{ vars.S3_CDN_DOMAIN }}' \
+            bash -s" << 'EOF'
             # 1️⃣ Check git exist
             if ! command -v git &> /dev/null; then
               echo "Git has not installed. Install git..."
@@ -56,15 +56,6 @@ jobs:
               cd /home/ec2-user
               git clone https://github.com/klishinoleg/cvosp.git
               cd /home/ec2-user/cvosp
-              export S3_ACCESS_KEY="${S3_ACCESS_KEY}"
-              export S3_SECRET_KEY="${S3_SECRET_KEY}"
-              export SERVER_HOST="${SERVER_HOST}"
-              export VITE_HOST="${VITE_HOST}"
-              export LANGUAGES="${LANGUAGES}"
-              export LANGUAGE="${LANGUAGE}"
-              export S3_BUCKET="${S3_BUCKET}"
-              export S3_REGION="${S3_REGION}"
-              export S3_CDN_DOMAIN="${S3_CDN_DOMAIN}"
               echo "${SERVER_HOST} ${VITE_HOST} ${LANGUAGES} ${LANGUAGE} ${S3_BUCKET} ${S3_REGION} ${S3_ACCESS_KEY} ${S3_SECRET_KEY} ${S3_CDN_DOMAIN}"
               envsubst '${SERVER_HOST} ${VITE_HOST} ${LANGUAGES} ${LANGUAGE} ${S3_BUCKET} ${S3_REGION} ${S3_ACCESS_KEY} ${S3_SECRET_KEY} ${S3_CDN_DOMAIN}' < .env.default > .env
               echo "Created .env with deploy variables:"
