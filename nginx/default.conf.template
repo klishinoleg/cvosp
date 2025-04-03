@@ -3,6 +3,8 @@ server {
 
     server_name ${SERVER_HOST};
 
+    client_max_body_size 50M;
+
     location / {
         proxy_pass http://api:8000;
     }
