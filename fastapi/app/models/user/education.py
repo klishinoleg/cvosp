@@ -18,5 +18,5 @@ class Education(AbstractBase):
     start_date = fields.DateField(null=True)
     end_date = fields.DateField(null=True)
     user = fields.ForeignKeyField('models.User', related_name='educations')
-    icon = ImageField(null=True, storage_type=STORAGE_TYPE)
+    icon = ImageField(null=True, storage_type=STORAGE_TYPE, field_for_name="name", directory_name="educations_icons")
     site = fields.CharField(max_length=100, null=True)
