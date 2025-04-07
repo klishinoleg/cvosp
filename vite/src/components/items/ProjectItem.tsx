@@ -6,10 +6,10 @@ import {Button, Divider, Flex, Image, Modal, Tag} from "antd";
 import {useTranslation} from "react-i18next";
 import {useSelector} from "react-redux";
 import {clearProject, loadProject, selectProject} from "../../store/slices/project.ts";
-import {TextMain} from "../styled/Text.ts";
 import {FlexColumn, FlexRow} from "../styled/Divs.ts";
 import {CheckOutlined, GlobalOutlined} from "@ant-design/icons";
 import {useAppDispatch} from "../../store/hooks.ts";
+import Markdown from 'react-markdown';
 
 export interface ProjectListItemProps {
     project: ProjectListSchema,
@@ -77,7 +77,7 @@ export const ProjectListItem: FC<ProjectListItemProps> = ({project}) => {
                                     </Tag>
                                 ))}
                             </Flex>
-                            <TextMain>{projectData.description}</TextMain>
+                            <Markdown>{projectData.description}</Markdown>
                             <Flex wrap style={{justifyContent: "space-between"}}>
                                 <Image.PreviewGroup>
                                     {projectData.images.map(image => (
