@@ -12,6 +12,7 @@ import {FlexColumn, FlexRow} from "../../styled/Divs.ts";
 import {LinkIcon} from "../../elements/IconLink.tsx";
 import {helperImageUrl} from "../../../helpers/helperImageUrl.ts";
 import {ProjectListItem} from "../../items/ProjectItem.tsx";
+import {Flex} from "antd";
 
 
 interface ExperienceProps {
@@ -37,11 +38,11 @@ const ExperienceItem: FC<ExperienceProps> = ({job}) => {
                         <TextMain>{job.description}</TextMain>
                     </FlexColumn>
                 </FlexRow>
-                <FlexRow>
+                <Flex wrap gap={10}>
                     {job.projects.map(project => (
                         <ProjectListItem project={project} key={`projectListItem${project.id}`}/>
                     ))}
-                </FlexRow>
+                </Flex>
             </FlexColumn>
         </ListItemWithCircle>
     )
