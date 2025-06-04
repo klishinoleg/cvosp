@@ -5,9 +5,39 @@ on:
     branches:
       - main
 jobs:
+  detect-changes:
+    runs-on: ubuntu-latest
+    outputs:
+      api_changed: ${{ steps.changes.outputs.api }}
+      vite_changed: ${{ steps.changes.outputs.vite }}
+      full_rebuild: ${{ steps.changes.outputs.full }}
+
+    steps:
+      - - name: Checkout code
+          uses: actions/checkout@v3
+
+      - name: Detect changed files
+        id: changes
+        run: |
+          git fetch origin main
+          echo "## Comparing changes"
+          API=$(git diff --name-only ${{ github.event.before }} ${{ github.sha }} | grep -E '^fastapi/' || true)
+          VITE=$(git diff --name-only ${{ github.event.before }} ${{ github.sha }} | grep -E '^vite/' || true)
+          FULL=$(git diff --name-only ${{ github.event.before }} ${{ github.sha }} | grep -E '(docker-compose.yml|Dockerfile|dapi\.Dockerfile|dvite\.Dockerfile)' || true)
+
+          echo "API=${API}"
+          echo "VITE=${VITE}"
+          echo "FULL=${FULL}"
+
+          if [ -n "$API" ]; then echo "api=true" >> $GITHUB_OUTPUT; else echo "api=false" >> $GITHUB_OUTPUT; fi
+          if [ -n "$VITE" ]; then echo "vite=true" >> $GITHUB_OUTPUT; else echo "vite=false" >> $GITHUB_OUTPUT; fi
+          if [ -n "$FULL" ]; then echo "full=true" >> $GITHUB_OUTPUT; else echo "full=false" >> $GITHUB_OUTPUT; fi
+
   deploy:
+    needs: detect-changes
     runs-on: ubuntu-latest
     environment: production
+    if: needs.detect-changes.outputs.api_changed == 'true' || needs.detect-changes.outputs.vite_changed == 'true' || needs.detect-changes.outputs.full_rebuild == 'true'
 
     steps:
       - name: Checkout code
@@ -23,7 +53,7 @@ jobs:
       - name: Check docker & git version
         run: ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "docker -v && docker-compose -v && git --version"
 
-      - name: Deploy to EC2
+      - name: Deploy via SSH
         run: |
           ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "\
             SERVER_HOST='${{ vars.SERVER_HOST }}' \
@@ -56,43 +86,32 @@ jobs:
               envsubst '${ADMIN_PASSWORD} ${SERVER_HOST} ${VITE_HOST} ${HTTP_SCHEME} ${POSTGRES_PASSWORD} ${LANGUAGES} ${LANGUAGE} ${ADMIN_PASSWORD} ${VITE_HOST} ${SERVER_HOST} ${SECRET_KEY} ${DB_PASSWORD} ${ADMIN_SECRET_KEY}' < .env.default > .env
               echo "Created .env with deploy variables:"
               cat .env
+              chmod +x /var/www/cvosp/docker/entrypoint_db.sh
+              chmod +x /var/www/cvosp/fastapi/entrypoint.sh
+              chmod +x /var/www/cvosp/nginx/entrypoint.sh
+              chmod +x /var/www/cvosp/vite/entrypoint.sh
             else
               echo "Update project..."
               cd /var/www/cvosp
               git pull origin main
             fi
           
-            chmod +x /home/ec2-user/cvosp/docker/entrypoint_db.sh
-            chmod +x /home/ec2-user/cvosp/fastapi/entrypoint.sh
-            chmod +x /home/ec2-user/cvosp/nginx/entrypoint.sh
-            chmod +x /home/ec2-user/cvosp/vite/entrypoint.sh
-          
-            DOCKER_IMAGES="klishinoleg/cvosp/api klishinoleg/cvosp/db klishinoleg/cvosp/vite"
-          
-            # 4️⃣ Run (reload) docker
-            echo "Rebuild docker containers with rollback..."
-            echo "Tagging current images as backup..."
-            for image in DOCKER_IMAGES; do
-              docker tag "$image:latest" "$image:backup"
-            done
-          
-            echo "Stopping old containers"
-            docker-compose down
-          
-            echo "Trying to build and start new containers..."
-            if docker-compose up --build -d; then
-              echo "✅ Compose succeeded"
-            else
-              echo "❌ Build failed, rolling back..."
-              docker-compose down
-              for image in DOCKER_IMAGES; do
-                docker tag "$image:backup" "$image:latest"
-              done
-              docker-compose up -d
-              echo "✅ Rollback completed"
+            {% raw %}# FULL REBUILD{% endraw %}
+            if [[ "${{ needs.detect-changes.outputs.full_rebuild }}" == "true" ]]; then
+              docker compose pull
+              docker compose up -d --build
+              exit 0
             fi
-            echo "🧹 Removing backup images..."
-            for image in $IMAGES; do
-              docker rmi "$image:backup" || true
-            done
+          
+            {% raw %}# BUILD API{% endraw %}
+            if [[ "${{ needs.detect-changes.outputs.api_changed }}" == "true" ]]; then
+              docker compose build api
+              docker compose up -d api
+            fi
+          
+            {% raw %}# BUILD VITE{% endraw %}
+            if [[ "${{ needs.detect-changes.outputs.vite_changed }}" == "true" ]]; then
+              docker compose build vite
+              docker compose up -d vite
+            fi
           EOF

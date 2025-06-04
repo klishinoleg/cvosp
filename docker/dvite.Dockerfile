@@ -9,5 +9,4 @@ COPY . .
 
 RUN chmod +x /app/entrypoint.sh
 
-EXPOSE 5173
 ENTRYPOINT [ "/app/entrypoint.sh" ]
