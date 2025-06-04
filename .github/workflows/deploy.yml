@@ -13,8 +13,8 @@ jobs:
       full_rebuild: ${{ steps.changes.outputs.full }}
 
     steps:
-      - - name: Checkout code
-          uses: actions/checkout@v3
+      - name: Checkout code
+        uses: actions/checkout@v3
 
       - name: Detect changed files
         id: changes
