@@ -30,7 +30,7 @@ services:
     depends_on:
       - db
     ports:
-      - "8011:8000"
+      - "8021:8000"
     env_file: .env
   #  nginx:
   #    image: nginx:latest
@@ -75,7 +75,7 @@ services:
     depends_on:
       - api
     ports:
-      - "8012:5173"
+      - "8022:5173"
 networks:
   frontend:
   backend:
