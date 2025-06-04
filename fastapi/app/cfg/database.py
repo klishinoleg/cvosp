@@ -10,7 +10,7 @@ DB_NAME = secrets.get('DB_NAME')
 DB_HOST = secrets.get('DB_HOST')
 DB_PORT = secrets.get('DB_PORT')
 
-DATABASE_URL = f"postgres://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}"
+DATABASE_URL = f"postgres://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}?sslmode=disable"
 
 TORTOISE_ORM = {
     "connections": {"default": DATABASE_URL},
