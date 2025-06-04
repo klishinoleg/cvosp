@@ -16,22 +16,35 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Detect changed files
-        id: changes
+      - name: Get changed files
+        id: changed
+        uses: tj-actions/changed-files@v39
+
+      - name: Set flags
+        id: set-vars
         run: |
-          git fetch origin main
-          echo "## Comparing changes"
-          API=$(git diff --name-only ${{ github.event.before }} ${{ github.sha }} | grep -E '^fastapi/' || true)
-          VITE=$(git diff --name-only ${{ github.event.before }} ${{ github.sha }} | grep -E '^vite/' || true)
-          FULL=$(git diff --name-only ${{ github.event.before }} ${{ github.sha }} | grep -E '(docker-compose.yml|Dockerfile|dapi\.Dockerfile|dvite\.Dockerfile)' || true)
-
-          echo "API=${API}"
-          echo "VITE=${VITE}"
-          echo "FULL=${FULL}"
-
-          if [ -n "$API" ]; then echo "api=true" >> $GITHUB_OUTPUT; else echo "api=false" >> $GITHUB_OUTPUT; fi
-          if [ -n "$VITE" ]; then echo "vite=true" >> $GITHUB_OUTPUT; else echo "vite=false" >> $GITHUB_OUTPUT; fi
-          if [ -n "$FULL" ]; then echo "full=true" >> $GITHUB_OUTPUT; else echo "full=false" >> $GITHUB_OUTPUT; fi
+          echo "All changed files:"
+          echo "${{ steps.changed.outputs.all_changed_files }}"
+          
+          API_CHANGED=false
+          VITE_CHANGED=false
+          FULL_REBUILD=false
+          
+          for file in ${{ steps.changed.outputs.all_changed_files }}; do
+            if [[ $file == fastapi/* ]]; then
+              API_CHANGED=true
+            fi
+            if [[ $file == vite/* ]]; then
+              VITE_CHANGED=true
+            fi
+            if [[ $file == docker-compose.yml || $file == dapi.Dockerfile || $file == dvite.Dockerfile || $file == dpg.Dockerfile || $file == Dockerfile ]]; then
+              FULL_REBUILD=true
+            fi
+          done
+          
+          echo "api_changed=${API_CHANGED}" >> $GITHUB_OUTPUT
+          echo "vite_changed=${VITE_CHANGED}" >> $GITHUB_OUTPUT
+          echo "full_rebuild=${FULL_REBUILD}" >> $GITHUB_OUTPUT
 
   deploy:
     needs: detect-changes
