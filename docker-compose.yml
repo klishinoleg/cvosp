@@ -8,9 +8,7 @@ services:
     build:
       context: .
       dockerfile: ./docker/dpg.Dockerfile
-    env_file:
-      - path: ".env"
-        required: true
+    env_file: .env
     expose:
       - "${DB_PORT}"
     volumes:
@@ -33,33 +31,31 @@ services:
       - db
     expose:
       - "8000"
-    env_file:
-      - path: ".env"
-        required: true
-  nginx:
-    image: nginx:latest
-    container_name: nginx
-    networks:
-      - backend
-      - frontend
-    env_file:
-      - path: .env
-        required: true
-    ports:
-      - "$SERVER_PORT:$SERVER_PORT"
-      - "$VITE_PORT:$VITE_PORT"
-    volumes:
-      - ./nginx/default.conf.template:/etc/nginx/conf.d/default.conf.template
-      - ./nginx/entrypoint.sh:/docker-entrypoint.d/99-entrypoint.sh
-    environment:
-      - SERVER_HOST=${SERVER_HOST}
-      - SERVER_PORT=${SERVER_PORT}
-      - VITE_HOST=${VITE_HOST}
-      - VITE_PORT=${VITE_PORT}
-    entrypoint: [ "/bin/sh", "-c", "/docker-entrypoint.d/99-entrypoint.sh && nginx -g 'daemon off;'" ]
-    depends_on:
-      - api
-      - vite
+    env_file: .env
+#  nginx:
+#    image: nginx:latest
+#    container_name: nginx
+#    networks:
+#      - backend
+#      - frontend
+#    env_file:
+#      - path: .env
+#        required: true
+#    ports:
+#      - "$SERVER_PORT:$SERVER_PORT"
+#      - "$VITE_PORT:$VITE_PORT"
+#    volumes:
+#      - ./nginx/default.conf.template:/etc/nginx/conf.d/default.conf.template
+#      - ./nginx/entrypoint.sh:/docker-entrypoint.d/99-entrypoint.sh
+#    environment:
+#      - SERVER_HOST=${SERVER_HOST}
+#      - SERVER_PORT=${SERVER_PORT}
+#      - VITE_HOST=${VITE_HOST}
+#      - VITE_PORT=${VITE_PORT}
+#    entrypoint: [ "/bin/sh", "-c", "/docker-entrypoint.d/99-entrypoint.sh && nginx -g 'daemon off;'" ]
+#    depends_on:
+#      - api
+#      - vite
   vite:
     image: klishinoleg/cvosp/vite:latest
     container_name: vite
