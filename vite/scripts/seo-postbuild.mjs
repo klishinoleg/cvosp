@@ -50,7 +50,7 @@ const pages = [
     priority: "1.0",
   },
   {
-    path: "/cases/exlibrus",
+    path: "/cases/exlibrus/",
     title: "Exlibrus — кейс Олега Клишина: full-stack, AI и производительность",
     description:
       "Кейс Exlibrus: книжная платформа, каталог, заказы, издательства, цифровое чтение, AI-помощники и измеримые ускорения до 273-307x.",
@@ -61,7 +61,7 @@ const pages = [
     keywords: ["Exlibrus", "Next.js", "FastAPI", "PostgreSQL", "Redis", "AI", "performance"],
   },
   {
-    path: "/cases/other-worlds",
+    path: "/cases/other-worlds/",
     title: "Other Worlds — кейс Олега Клишина: Web3/MMORPG, TON, IPFS, real-time",
     description:
       "Кейс Other Worlds: Telegram Mini App, браузерная MMORPG, NFT-аватары, TON/FunC, IPFS и real-time боевые события.",
@@ -72,7 +72,7 @@ const pages = [
     keywords: ["Other Worlds", "Telegram Mini App", "TON", "FunC", "IPFS", "FastAPI", "React"],
   },
   {
-    path: "/projects/lazy-reader-1",
+    path: "/projects/lazy-reader-1/",
     title: "Lazy Reader — AI-продукт для чтения и языков | Олег Клишин",
     description:
       "Проект Lazy Reader: AI-перевод, языковые подсказки, Telegram Mini App, React, FastAPI и PostgreSQL.",
@@ -82,7 +82,7 @@ const pages = [
     caseName: "Lazy Reader",
   },
   {
-    path: "/projects/other-worlds-2",
+    path: "/projects/other-worlds-2/",
     title: "Other Worlds project dossier | Олег Клишин",
     description:
       "Проектное досье Other Worlds: Web3/MMORPG, React, TypeScript, FastAPI, Kafka, Redis, TON, FunC и IPFS.",
@@ -92,7 +92,7 @@ const pages = [
     caseName: "Other Worlds project dossier",
   },
   {
-    path: "/projects/seo-for-ctc-13",
+    path: "/projects/seo-for-ctc-13/",
     title: "CTC Media SEO кейс | Олег Клишин",
     description:
       "Досье по SEO/growth работе для CTC Media: семантика, техническое SEO, аналитика, контентная структура и задачи для роста.",

@@ -12,8 +12,8 @@ This file is a curated map for LLMs and AI agents. Use it to understand who Oleg
 
 ## Flagship Cases
 
-- [Exlibrus case](https://klishinoleg.work/cases/exlibrus): Full-cycle development for a book platform with catalog, orders, publishers, digital reading, imports, email flows, AI assistants and performance work.
-- [Other Worlds case](https://klishinoleg.work/cases/other-worlds): Web3/MMORPG ecosystem with Telegram Mini App, browser game, NFT avatars, TON/FunC, IPFS and real-time battle systems.
+- [Exlibrus case](https://klishinoleg.work/cases/exlibrus/): Full-cycle development for a book platform with catalog, orders, publishers, digital reading, imports, email flows, AI assistants and performance work.
+- [Other Worlds case](https://klishinoleg.work/cases/other-worlds/): Web3/MMORPG ecosystem with Telegram Mini App, browser game, NFT avatars, TON/FunC, IPFS and real-time battle systems.
 
 ## PDF Materials
 
@@ -23,9 +23,9 @@ This file is a curated map for LLMs and AI agents. Use it to understand who Oleg
 
 ## Projects And Evidence
 
-- [CTC Media dossier](https://klishinoleg.work/projects/seo-for-ctc-13): Media SEO and organic growth work.
-- [Lazy Reader dossier](https://klishinoleg.work/projects/lazy-reader-1): AI reading and language-learning product.
-- [Other Worlds project dossier](https://klishinoleg.work/projects/other-worlds-2): Project page for the Web3/MMORPG ecosystem.
+- [CTC Media dossier](https://klishinoleg.work/projects/seo-for-ctc-13/): Media SEO and organic growth work.
+- [Lazy Reader dossier](https://klishinoleg.work/projects/lazy-reader-1/): AI reading and language-learning product.
+- [Other Worlds project dossier](https://klishinoleg.work/projects/other-worlds-2/): Project page for the Web3/MMORPG ecosystem.
 
 ## Core Skills
 

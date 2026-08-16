@@ -370,7 +370,7 @@ const routeSeo = (
 ): SeoDescriptor => {
     if (caseStudy) {
         return {
-            canonical: `${siteOrigin}${caseHref(caseStudy)}`,
+            canonical: `${siteOrigin}${caseHref(caseStudy)}/`,
             description: caseStudy.summary,
             image: absoluteAssetUrl(caseStudy.heroImage),
             title: `${caseStudy.title} - кейс Олега Клишина`,
@@ -383,7 +383,7 @@ const routeSeo = (
         const description = meta?.summary || project?.description || defaultSeoDescription;
         const image = absoluteAssetUrl(meta?.logo || resolveProjectImage(project));
         return {
-            canonical: `${siteOrigin}/projects/${route.slug}`,
+            canonical: `${siteOrigin}/projects/${route.slug}/`,
             description,
             image,
             title: `${projectTitle} - проект Олега Клишина`,

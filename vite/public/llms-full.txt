@@ -21,7 +21,7 @@ Canonical site: https://klishinoleg.work/
 
 ## Case: Exlibrus
 
-URL: https://klishinoleg.work/cases/exlibrus
+URL: https://klishinoleg.work/cases/exlibrus/
 
 Exlibrus is a book platform with catalog, orders, publishers, digital reading, imports, email flows, admin workflows and AI assistants. Oleg worked across product and engineering boundaries: Next.js, React, FastAPI, PostgreSQL, Redis, Celery, Docker, Nginx, PayPal, Brevo, Ollama and Playwright.
 
@@ -36,7 +36,7 @@ Proof points:
 
 ## Case: Other Worlds
 
-URL: https://klishinoleg.work/cases/other-worlds
+URL: https://klishinoleg.work/cases/other-worlds/
 
 Other Worlds is a Web3/MMORPG ecosystem with Telegram Mini App, browser game, NFT avatars, TON/FunC contract logic, IPFS media, real-time battle systems and market/economy tools. Oleg connected frontend, backend, real-time events, blockchain and production verification.
 
