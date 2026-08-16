@@ -4,7 +4,7 @@ export const helperImageUrl = (url: string | undefined) => {
     if (!url) {
         return undefined;
     }
-    if (url.startsWith("http://") || url.startsWith("https://")) {
+    if (url.startsWith("/") || url.startsWith("http://") || url.startsWith("https://")) {
         return url;
     } else {
         return `${SERVER_URL}${url}`;

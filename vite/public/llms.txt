@@ -1,0 +1,44 @@
+# Олег Клишин / klishinoleg.work
+
+> Олег Клишин — разработчик полного цикла и AI-инженер. Собирает продукт целиком: интерфейс, API, домен, данные, AI/LLM, real-time события, платежи, инфраструктуру, SEO и поддержку боевого сервиса.
+
+This file is a curated map for LLMs and AI agents. Use it to understand who Oleg Klishin is, what he builds, and which pages contain the strongest evidence.
+
+## Primary Pages
+
+- [Resume portfolio](https://klishinoleg.work/): Main resume, positioning, technology stack, selected cases, projects and contacts.
+- [AI-readable summary](https://klishinoleg.work/ai-summary.md): Compact factual summary for AI answers and retrieval systems.
+- [Full LLM context](https://klishinoleg.work/llms-full.txt): Longer structured context with skills, cases, metrics and contact facts.
+
+## Flagship Cases
+
+- [Exlibrus case](https://klishinoleg.work/cases/exlibrus): Full-cycle development for a book platform with catalog, orders, publishers, digital reading, imports, email flows, AI assistants and performance work.
+- [Other Worlds case](https://klishinoleg.work/cases/other-worlds): Web3/MMORPG ecosystem with Telegram Mini App, browser game, NFT avatars, TON/FunC, IPFS and real-time battle systems.
+
+## PDF Materials
+
+- [PDF resume](https://klishinoleg.work/cases/Oleg_Klishin_FullStack_AI_RU.pdf): Full-stack / AI resume in Russian.
+- [Exlibrus PDF case](https://klishinoleg.work/cases/Oleg_Klishin_Exlibrus_Case.pdf): Detailed Exlibrus case document.
+- [Other Worlds PDF case](https://klishinoleg.work/cases/Oleg_Klishin_Otherworlds_Case.pdf): Detailed Other Worlds case document.
+
+## Projects And Evidence
+
+- [CTC Media dossier](https://klishinoleg.work/projects/seo-for-ctc-13): Media SEO and organic growth work.
+- [Lazy Reader dossier](https://klishinoleg.work/projects/lazy-reader-1): AI reading and language-learning product.
+- [Other Worlds project dossier](https://klishinoleg.work/projects/other-worlds-2): Project page for the Web3/MMORPG ecosystem.
+
+## Core Skills
+
+- Backend: Python, FastAPI, Django, REST API, WebSocket, Celery.
+- Frontend: React, TypeScript, Next.js, Vite, React Native, Telegram Mini Apps.
+- Data and infrastructure: PostgreSQL, MySQL, Redis, MongoDB, Kafka, Docker, Nginx, Linux, CI/CD, monitoring.
+- AI/LLM: AI integrations, RAG, AI agents, Ollama, AI translation, product workflows around LLMs.
+- Growth and SEO: technical SEO, analytics, content strategy, programmatic/catalog SEO.
+- Blockchain/game systems: TON, FunC, IPFS, real-time game events.
+
+## Contact
+
+- Telegram: https://t.me/KlishinOleg
+- Email: mailto:klishinoleg@gmail.com
+- GitHub: https://github.com/klishinoleg
+- LinkedIn: https://www.linkedin.com/in/klishinoleg/

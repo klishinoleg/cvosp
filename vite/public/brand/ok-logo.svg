@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-labelledby="title desc">
+  <title id="title">OK logo for klishinoleg.work</title>
+  <desc id="desc">A compact monogram logo with the letters OK for Oleg Klishin.</desc>
+  <rect width="512" height="512" rx="34" fill="#f4b02a"/>
+  <path d="M34 34h444v444H34z" fill="none" stroke="#171815" stroke-width="22"/>
+  <path d="M92 420 420 92" stroke="#b83232" stroke-width="28" stroke-linecap="square"/>
+  <path d="M92 92h328v328H92z" fill="#fffaf0" stroke="#171815" stroke-width="14"/>
+  <path d="M95 95h322v322H95z" fill="none" stroke="#08746f" stroke-width="7"/>
+  <text x="255" y="308" text-anchor="middle"
+        font-family="Arial Black, Arial, Helvetica, sans-serif"
+        font-size="162" font-weight="900" letter-spacing="-11"
+        fill="#171815">OK</text>
+  <path d="M118 364h276" stroke="#171815" stroke-width="10" stroke-linecap="square"/>
+</svg>

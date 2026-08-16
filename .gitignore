@@ -30,6 +30,7 @@ alembic/
 # Logs
 *.log
 logs/
+.work/
 
 # Cython
 *.so
