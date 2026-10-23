@@ -28,6 +28,13 @@ const skillNames = [
 const projectIcon = "/uploads/projects_icons/imia.webp";
 const defaultProjectImage = "/cases/otherworlds-case.png";
 
+const getProjectImage = (id: number): string => {
+  if (id === 2) return "/cases/otherworlds-case.png";
+  if (id === 17) return "/cases/exlibrus-home.png";
+  if (id === 18) return "/cases/voice-school-01.jpg";
+  return defaultProjectImage;
+};
+
 const project = (
   id: number,
   name: string,
@@ -45,8 +52,8 @@ const project = (
   images: [
     {
       id: id * 10,
-      image: id === 2 ? "/cases/otherworlds-case.png" : defaultProjectImage,
-      thumbnail: id === 2 ? "/cases/otherworlds-case.png" : defaultProjectImage,
+      image: getProjectImage(id),
+      thumbnail: getProjectImage(id),
     },
   ],
 });
@@ -59,6 +66,14 @@ export const fallbackProjects: Record<number, ProjectSchema> = {
     ["Next.js", "React", "FastAPI", "PostgreSQL", "Redis", "Celery", "Docker", "AI / LLM"],
     "https://exlibrus.net/",
     "/cases/exlibrus-home.png",
+  ),
+  18: project(
+    18,
+    "Voice School",
+    "RU/EN production-платформа онлайн-школы вокала: продуктовые страницы, лиды, AI-редактура через MCP, SEO/GEO/AEO и Kubernetes-инфраструктура.",
+    ["Django", "PostgreSQL", "AI / LLM", "MCP", "Docker", "Kubernetes", "SEO"],
+    "https://voice-school.com/",
+    "/cases/voice-school-logo.png",
   ),
   1: project(
     1,
@@ -269,7 +284,7 @@ export const fallbackUser: UserSchema = {
       description: "Продуктовая разработка на стыке интерфейса, серверной логики, AI, интеграций, инфраструктуры и поддержки боевых сервисов.",
       startDate: "2019-01-01",
       icon: "/uploads/jobs_icons/frilans.webp",
-      projects: fallbackProjectList.filter((item) => item.id <= 12 || item.id === 17),
+      projects: fallbackProjectList.filter((item) => item.id <= 12 || item.id === 17 || item.id === 18),
     },
   ],
   educations: [

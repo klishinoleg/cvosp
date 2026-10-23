@@ -204,6 +204,93 @@ export const caseStudies: CaseStudy[] = [
       },
     ],
   },
+  {
+    slug: "voice-school",
+    projectId: 18,
+    title: "Voice School",
+    label: "EdTech / AI-assisted delivery / SEO",
+    role: "Продуктовые требования, full-stack развитие, AI-процессы, SEO и production",
+    summary:
+      "Развитие действующей RU/EN-платформы онлайн-школы вокала: продуктовые страницы, лиды, AI-редактура через MCP, масштабируемая SEO-география и Kubernetes-инфраструктура.",
+    heroImage: "/cases/voice-school-01.jpg",
+    detailImage: "/cases/voice-school-02.jpg",
+    pdfUrl: "/cases/Oleg_Klishin_VoiceSchool_Case.pdf",
+    siteUrl: "https://voice-school.com/",
+    accent: "blue",
+    metrics: [
+      "109 стран в полном каталоге",
+      "385 городов в полном каталоге",
+      "208 проверенных RU/EN geo-URL",
+      "453 публичные проверки в SEO-релизе",
+      "210 вариантов текстов ссылок",
+      "23 существующих материала разобраны",
+    ],
+    stack: [
+      "Python",
+      "Django",
+      "Django REST",
+      "PostgreSQL",
+      "JavaScript",
+      "AI Agents",
+      "MCP",
+      "Docker",
+      "Kubernetes",
+      "Nginx",
+      "Cloudflare",
+      "SEO",
+    ],
+    sections: [
+      {
+        title: "Бизнес-задача",
+        body:
+          "Развивать уже работающую школу как единый digital-продукт: двуязычный сайт, направления обучения, преподаватели, контент, заявки, Telegram/Zoom-сценарии, аналитика и органический спрос.",
+      },
+      {
+        title: "Моя зона ответственности",
+        body:
+          "Формулировал продуктовые требования, проектировал RU/EN-разделы и SEO-логику, создавал редакционные AI-процессы через MCP, работал с кодом и инфраструктурой, координировал интерфейс и выпускал изменения в production.",
+      },
+      {
+        title: "Результат для продукта",
+        body:
+          "Платформа получила масштабируемый геокаталог, управляемую публикацию контента с preview и rollback, техническую основу для SEO/GEO/AEO и воспроизводимый production-контур.",
+      },
+    ],
+    slides: [
+      {
+        title: "Онлайн-школа как единый digital-продукт",
+        kicker: "Контекст",
+        body:
+          "Voice School связывает RU/EN-сайт, направления обучения, преподавателей, образовательные материалы, заявки, Telegram/Zoom и инфраструктуру эксплуатации.",
+        image: "/cases/voice-school-01.jpg",
+        facts: ["двуязычная платформа", "лиды и учебные сценарии", "живой production"],
+      },
+      {
+        title: "AI-редактура через MCP",
+        kicker: "Решение",
+        body:
+          "AI-агенты работают с контентом через контролируемый слой: черновик, предварительный просмотр, публикация, проверка версии и откат.",
+        image: "/cases/voice-school-03.jpg",
+        facts: ["draft / preview / publish", "rollback и version check", "AI-assisted delivery"],
+      },
+      {
+        title: "SEO-география без ручного хаоса",
+        kicker: "Масштаб",
+        body:
+          "Структура стран, городов, языковых версий, внутренних ссылок, canonical, hreflang, sitemap и JSON-LD собрана в проверяемый контур.",
+        image: "/cases/voice-school-02.jpg",
+        facts: ["109 стран / 385 городов", "208 RU/EN geo-URL", "453 публичные проверки"],
+      },
+      {
+        title: "Что я закрывал в проекте",
+        kicker: "Роль",
+        body:
+          "Продуктовые требования, full-stack задачи, SEO/GEO/AEO, контентные процессы, интерфейсная координация, инфраструктура и production-релизы.",
+        image: "/cases/voice-school-04.jpg",
+        facts: ["Django + PostgreSQL", "Docker + Kubernetes", "Cloudflare + Nginx"],
+      },
+    ],
+  },
 ];
 
 export const resumePdfUrl = "/cases/Oleg_Klishin_FullStack_AI_RU.pdf";

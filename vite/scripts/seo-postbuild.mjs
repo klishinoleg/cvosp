@@ -44,7 +44,7 @@ const pages = [
     path: "/",
     title: "Олег Клишин — Full-Stack / AI Engineer",
     description:
-      "Олег Клишин — full-stack / AI engineer: Python, FastAPI, Django, React, TypeScript, PostgreSQL, Redis, AI/LLM, RAG, SEO и продуктовые кейсы Exlibrus и Other Worlds.",
+      "Олег Клишин — full-stack / AI engineer: Python, FastAPI, Django, React, TypeScript, PostgreSQL, Redis, AI/LLM, RAG, SEO и продуктовые кейсы Exlibrus, Other Worlds и Voice School.",
     type: "profile",
     image: defaultImage,
     priority: "1.0",
@@ -70,6 +70,17 @@ const pages = [
     priority: "0.9",
     caseName: "Other Worlds",
     keywords: ["Other Worlds", "Telegram Mini App", "TON", "FunC", "IPFS", "FastAPI", "React"],
+  },
+  {
+    path: "/cases/voice-school/",
+    title: "Voice School — кейс Олега Клишина: Django, AI, SEO и Kubernetes",
+    description:
+      "Кейс Voice School: RU/EN EdTech-платформа, AI-редактура через MCP, 109 стран, 385 городов, SEO/GEO/AEO и Kubernetes-инфраструктура.",
+    type: "article",
+    image: `${baseUrl}/cases/voice-school-01.jpg`,
+    priority: "0.9",
+    caseName: "Voice School",
+    keywords: ["Voice School", "Django", "MCP", "AI agents", "SEO", "Kubernetes", "EdTech"],
   },
   {
     path: "/projects/lazy-reader-1/",

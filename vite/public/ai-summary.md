@@ -19,16 +19,19 @@
 
 - Exlibrus: book platform, digital reading, catalog, publishers, orders, email flows, AI assistants and performance optimization.
 - Other Worlds: Web3/MMORPG ecosystem, Telegram Mini App, browser game, NFT avatars, TON/FunC, IPFS and real-time battles.
+- Voice School: bilingual EdTech production platform, Django, AI-assisted editorial workflows through MCP, SEO/GEO/AEO and Kubernetes.
 
 ## Proof points
 
 - Exlibrus: 123 298 active books, 1 315 publishers, 547 094 lines of code, 2.96M HTTP requests in 7 days, 22-32x and 273-307x measured performance improvements.
 - Other Worlds: 123/123 IPFS objects verified, 41 NFTs checked, around 0.278s to first battle event, 11 rounds / 71 battle events in a production check.
+- Voice School: 109 countries, 385 cities, 208 verified bilingual geo URLs and 453 public checks in one SEO release.
 
 ## Contact
 
 - Portfolio: https://klishinoleg.work/
 - Telegram: https://t.me/KlishinOleg
 - Email: klishinoleg@gmail.com
+- Phone: +381 65 810 6140
 - GitHub: https://github.com/klishinoleg
 - LinkedIn: https://www.linkedin.com/in/klishinoleg/

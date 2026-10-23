@@ -258,7 +258,7 @@ const siteOrigin = "https://klishinoleg.work";
 const defaultSeoImage = `${siteOrigin}/uploads/avatars/oleg-klishin.png`;
 const defaultSeoDescription = (
     "Олег Клишин - full-stack / AI engineer: Python, FastAPI, Django, React, TypeScript, " +
-    "PostgreSQL, Redis, AI/LLM, RAG, SEO и продуктовые кейсы Exlibrus и Other Worlds."
+    "PostgreSQL, Redis, AI/LLM, RAG, SEO и продуктовые кейсы Exlibrus, Other Worlds и Voice School."
 );
 
 const absoluteAssetUrl = (value?: string): string => {
@@ -740,6 +740,7 @@ const HomePage = ({allProjects, navigate, openPreview, user}: HomePageProps) => 
                                     Открыть кейс
                                     </a>
                                     <a className="button ghost" href={study.pdfUrl}>PDF</a>
+                                    {study.siteUrl && <a className="button ghost" href={study.siteUrl}>Сайт ↗</a>}
                                 </div>
                             </div>
                         </article>
@@ -758,7 +759,7 @@ const HomePage = ({allProjects, navigate, openPreview, user}: HomePageProps) => 
                             <div>
                                 <h3>{meta?.client.name || project.name}</h3>
                                 <p>{meta?.client.name || project.jobName}</p>
-                                <span>{project.jobRange}</span>
+                                <span>{meta?.period || project.jobRange}</span>
                                 {meta && <strong className="project-card-type">{meta.category}</strong>}
                             </div>
                             <div className="project-actions">

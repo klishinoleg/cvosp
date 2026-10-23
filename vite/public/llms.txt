@@ -14,12 +14,14 @@ This file is a curated map for LLMs and AI agents. Use it to understand who Oleg
 
 - [Exlibrus case](https://klishinoleg.work/cases/exlibrus/): Full-cycle development for a book platform with catalog, orders, publishers, digital reading, imports, email flows, AI assistants and performance work.
 - [Other Worlds case](https://klishinoleg.work/cases/other-worlds/): Web3/MMORPG ecosystem with Telegram Mini App, browser game, NFT avatars, TON/FunC, IPFS and real-time battle systems.
+- [Voice School case](https://klishinoleg.work/cases/voice-school/): RU/EN EdTech platform with Django, AI-assisted editorial workflows through MCP, scalable SEO geography and Kubernetes infrastructure.
 
 ## PDF Materials
 
 - [PDF resume](https://klishinoleg.work/cases/Oleg_Klishin_FullStack_AI_RU.pdf): Full-stack / AI resume in Russian.
 - [Exlibrus PDF case](https://klishinoleg.work/cases/Oleg_Klishin_Exlibrus_Case.pdf): Detailed Exlibrus case document.
 - [Other Worlds PDF case](https://klishinoleg.work/cases/Oleg_Klishin_Otherworlds_Case.pdf): Detailed Other Worlds case document.
+- [Voice School PDF case](https://klishinoleg.work/cases/Oleg_Klishin_VoiceSchool_Case.pdf): Detailed Voice School case document.
 
 ## Projects And Evidence
 
@@ -40,5 +42,6 @@ This file is a curated map for LLMs and AI agents. Use it to understand who Oleg
 
 - Telegram: https://t.me/KlishinOleg
 - Email: mailto:klishinoleg@gmail.com
+- Phone: tel:+381658106140
 - GitHub: https://github.com/klishinoleg
 - LinkedIn: https://www.linkedin.com/in/klishinoleg/
